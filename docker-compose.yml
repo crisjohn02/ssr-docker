@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+
+  php-fpm:
+    build: 
+      context: ./php
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: php
+    volumes:
+      - ./fluent:/var/www/fluent.test
+      - ./express:/var/www/express.test
+    networks:
+      - some-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  fluent-widget:
+    build:
+      context: ./nodejs20
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: fluent-widget
+    volumes:
+      - ./fluent-widget:/var/www/html
+    networks:
+      - some-network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./fluent:/var/www/fluent.test
+      - ./express:/var/www/express.test
+    ports:
+      - "80:80"
+      - "6001:6001"
+    networks:
+      - some-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - soketi
+
+  soketi:
+    image: 'quay.io/soketi/soketi:latest-16-alpine'
+    container_name: soketi
+    environment:
+      SOKETI_DEBUG: '${SOKETI_DEBUG:-1}'
+      SOKETI_METRICS_SERVER_PORT: '9601'
+      SOKETI_DEFAULT_APP_ID: 'app-id'
+      SOKETI_DEFAULT_APP_KEY: 'app-key'
+      SOKETI_DEFAULT_APP_SECRET: 'app-secret'
+    networks:
+      - some-network
+
+networks:
+  some-network:
+   driver: bridge
