@@ -35,11 +35,21 @@ services:
     volumes:
       - ./fluent:/var/www/fluent.test
       - ./express:/var/www/express.test
+      # - ./impress:/var/www/impress.test
+      # - ./fast:/var/www/fast.test
+      # - ./act:/var/www/act.test
     ports:
       - "80:80"
-      - "6001:6001"
     networks:
-      - some-network
+      some-network:
+        aliases:
+          - fluent.test
+          - express.test
+          - fluent-widget.test
+          - ws.test
+          - impress.test
+          - fast.test
+          - act.test
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:

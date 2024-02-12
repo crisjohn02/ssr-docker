@@ -15,4 +15,4 @@ fi
 
 # Run the nodejs server
 # pm2 start widget.js -- --port 3000
-node widget.js --port=3000
+nodemon  widget.js --port=3000

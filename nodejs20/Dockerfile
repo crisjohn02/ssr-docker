@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:20.11.0
 
 ARG WORKDIR=/var/www/html
 
@@ -6,7 +6,8 @@ ENV WORKDIR=${WORKDIR}
 
 WORKDIR /var/www/html
 
-RUN npm install pm2@latest -g
+# RUN npm install pm2@latest -g
+RUN npm install nodemon --global
 # RUN npm i
 
 COPY entrypoint.sh /usr/local/bin/
