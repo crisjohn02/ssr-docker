@@ -52,12 +52,14 @@ WORKDIR $WORKDIR
 ADD php.ini $PHP_INI_DIR/conf.d/
 
 # SETUP PHP-FPM CONFIG SETTINGS (max_children / max_requests)
-RUN echo 'pm.max_children = 75' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
-    echo 'pm.max_requests = 500' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
-    echo 'pm.min_spare_servers = 10' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
-    echo 'pm.process_idle_timeout = 10s' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
-    echo 'pm.max_spare_servers = 40' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
-    echo 'pm.start_servers = 20' >> /usr/local/etc/php-fpm.d/zz-docker.conf
+# RUN echo 'pm.max_children = 75' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
+#     echo 'pm.max_requests = 500' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
+#     echo 'pm.min_spare_servers = 10' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
+#     echo 'pm.process_idle_timeout = 10s' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
+#     echo 'pm.max_spare_servers = 40' >> /usr/local/etc/php-fpm.d/zz-docker.conf && \
+#     echo 'pm.start_servers = 20' >> /usr/local/etc/php-fpm.d/zz-docker.conf
+
+COPY www.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 # COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 # RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -72,5 +74,6 @@ RUN chown -R www-data:www-data $WORKDIR
 # RUN chmod -R o+w /var/www/fluent.test/storage /var/www/fluent.test/bootstrap/cache
 
 EXPOSE 9000
+EXPOSE 9001
 
 CMD [ "php-fpm", "--nodaemonize" ]

@@ -25,13 +25,17 @@ services:
     volumes:
       - ./fluent-widget:/var/www/html
     networks:
-      - some-network
+      some-network:
+        aliases:
+          - fluent.test
+          - fluent-widget.test
 
   nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
     restart: unless-stopped
+    container_name: nginx
     volumes:
       - ./fluent:/var/www/fluent.test
       - ./express:/var/www/express.test
@@ -40,6 +44,8 @@ services:
       # - ./act:/var/www/act.test
     ports:
       - "80:80"
+      - "5173:5173"
+      - "5174:5174"
     networks:
       some-network:
         aliases:
@@ -54,10 +60,13 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on:
       - soketi
+    # command: bash -c "cd /var/www/fluent.test && npm run dev"
 
   soketi:
     image: 'quay.io/soketi/soketi:latest-16-alpine'
     container_name: soketi
+    ports:
+      - "6001:6001"
     environment:
       SOKETI_DEBUG: '${SOKETI_DEBUG:-1}'
       SOKETI_METRICS_SERVER_PORT: '9601'
@@ -65,7 +74,11 @@ services:
       SOKETI_DEFAULT_APP_KEY: 'app-key'
       SOKETI_DEFAULT_APP_SECRET: 'app-secret'
     networks:
-      - some-network
+      some-network:
+        aliases:
+          - fluent.test
+          - fluent-widget.test
+          - ws.test
 
 networks:
   some-network:
