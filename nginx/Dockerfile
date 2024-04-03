@@ -32,6 +32,9 @@ COPY servers/ws.test.conf /etc/nginx/sites-available/ws.test.conf
 COPY servers/impress.test.conf /etc/nginx/sites-available/impress.test.conf
 COPY servers/fast.test.conf /etc/nginx/sites-available/fast.test.conf
 COPY servers/act.test.conf /etc/nginx/sites-available/act.test.conf
+COPY servers/act-engine.test.conf /etc/nginx/sites-available/act-engine.test.conf
+COPY servers/eaat2-engine.test.conf /etc/nginx/sites-available/eaat2-engine.test.conf
+COPY servers/express-engine.test.conf /etc/nginx/sites-available/express-engine.test.conf
 
 # RUN mkdir -p /etc/nginx/sites-enabled
 RUN ln -s /etc/nginx/sites-available/fluent.test.conf /etc/nginx/conf.d/fluent.test.conf
@@ -41,6 +44,9 @@ RUN ln -s /etc/nginx/sites-available/ws.test.conf /etc/nginx/conf.d/ws.test.conf
 RUN ln -s /etc/nginx/sites-available/impress.test.conf /etc/nginx/conf.d/impress.test.conf
 RUN ln -s /etc/nginx/sites-available/fast.test.conf /etc/nginx/conf.d/fast.test.conf
 RUN ln -s /etc/nginx/sites-available/act.test.conf /etc/nginx/conf.d/act.test.conf
+RUN ln -s /etc/nginx/sites-available/act-engine.test.conf /etc/nginx/conf.d/act-engine.test.conf
+RUN ln -s /etc/nginx/sites-available/eaat2-engine.test.conf /etc/nginx/conf.d/eaat2-engine.test.conf
+RUN ln -s /etc/nginx/sites-available/express-engine.test.conf /etc/nginx/conf.d/express-engine.test.conf
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -50,6 +56,7 @@ EXPOSE 80
 EXPOSE 6001
 EXPOSE 5173
 EXPOSE 5174
+EXPOSE 5175
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
 # CMD [ "/usr/sbin/nginx", "-g", "daemon off;" ]

@@ -61,8 +61,8 @@ ADD php.ini $PHP_INI_DIR/conf.d/
 
 COPY www.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
-# COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-# RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 # RUN ln -s /usr/local/bin/entrypoint.sh /
 
 RUN usermod -u ${HOST_UID} www-data
@@ -76,4 +76,6 @@ RUN chown -R www-data:www-data $WORKDIR
 EXPOSE 9000
 EXPOSE 9001
 
-CMD [ "php-fpm", "--nodaemonize" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
+
+# CMD [ "php-fpm", "--nodaemonize" ]

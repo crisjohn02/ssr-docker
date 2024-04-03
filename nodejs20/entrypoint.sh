@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 Red='\033[0;31m'          # Red
 Green='\033[0;32m'        # Green
 echo ""
@@ -9,10 +10,8 @@ echo "***********************************************************"
 set -e
 
 # npm install if node_modules folder does not exists
-if [ ! -d "/var/www/html/node_modules" ]; then
-    npm install
+if [ ! -d /var/www/html/node_modules ]; then
+    (cd /var/www/html && npm install && nodemon  widget.js --port=3000) &
 fi
 
-# Run the nodejs server
-# pm2 start widget.js -- --port 3000
-nodemon  widget.js --port=3000
+(cd /var/www/html && nodemon  widget.js --port=3000)
