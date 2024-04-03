@@ -46,7 +46,7 @@ services:
       - ./fast:/var/www/fast.test
       - ./act:/var/www/act.test
       - ./engines/act/www:/var/www/act-engine.test
-      - ./engines/eaat2/dist:/var/www/eaat2-engine.test
+      - ./engines/eaat2:/var/www/fast-engine.test
       - ./engines/express:/var/www/express-engine.test
     ports:
       - "80:80"
@@ -65,7 +65,7 @@ services:
           - act.test
           - act-engine.tes
           - impress.test
-          - eaat2-engine.test
+          - fast-engine.test
           - express-engine.test
     extra_hosts:
       - "host.docker.internal:host-gateway"
