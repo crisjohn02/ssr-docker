@@ -36,6 +36,22 @@ You can access the phpMyAdmin thru `http://localhost:8080`
 - `db-fluent`
 - `db-express`
 - `db-act`
-- `db-fast` 
+- `db-fast`
+
+### Host
+
+Add the following lines in your hosts file `C:/Windows/System32/drivers/etc/hosts` for windows and `/etc/hosts` for UNIX
+
+`127.0.0.1	fluent.test`
+`127.0.0.1	express.test`
+`127.0.0.1	act.test`
+`127.0.0.1	impress.test`
+`127.0.0.1	fast.test`
+`127.0.0.1	ws.test`
+`127.0.0.1	fluent-widget.test`
+`127.0.0.1	act-engine.test`
+`127.0.0.1	fast-engine.test`
+`127.0.0.1	express-engine.test`
+`127.0.0.1	fluent-flask.test`
 
 
