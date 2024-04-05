@@ -42,7 +42,6 @@ You can access the phpMyAdmin thru `http://localhost:8080`
 
 Add the following lines in your hosts file `C:/Windows/System32/drivers/etc/hosts` for windows and `/etc/hosts` for UNIX
 
-<pre>
 ```
 127.0.0.1	fluent.test
 127.0.0.1	express.test
@@ -56,6 +55,5 @@ Add the following lines in your hosts file `C:/Windows/System32/drivers/etc/host
 127.0.0.1	express-engine.test
 127.0.0.1	fluent-flask.test
 ```
-</pre>
 
 
