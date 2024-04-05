@@ -206,6 +206,20 @@ services:
     volumes:
       - ./apps/fluent-widget/src:/var/www/fluent-widget.test
 
+  express-engine:
+    build:
+      context: ./apps/express-engine
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: express-engine
+    networks:
+      ssr-network:
+        aliases:
+          - express.test
+          - express-engine.test
+    volumes:
+      - ./apps/express-engine/src:/var/www/express-engine.test
+
 # ==================== PYTHON APPLICATIONS ==================
 
   fluent-flask:
