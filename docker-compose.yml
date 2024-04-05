@@ -144,11 +144,11 @@ services:
       - php-fast
       - soketi
     ports:
-      - 80:80
-      - 5173:5173
-      - 5174:5174
-      - 5175:5175
-      - 5176:5176
+      - "80:80"
+      - "5173:5173"
+      - "5174:5174"
+      - "5175:5175"
+      - "5176:5176"
     volumes:
       - ./apps/fluent/src:/var/www/fluent.test
       - ./apps/express/src:/var/www/express.test
@@ -168,6 +168,7 @@ services:
           - express-engine.test
           - fast-engine.test
           - fluent-flask.test
+          - express.test
 
 # ======================= SOKETI - WEBSOCKET ===============
 
