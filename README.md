@@ -33,9 +33,9 @@ You can access the phpMyAdmin thru `http://localhost:8080`
 
 ### Database hosts/servers
 
-- Fluent  `db-fluent`
-- Express `db-express`
-- ACT     `db-act`
-- FAST    `db-fast` 
+- `db-fluent`
+- `db-express`
+- `db-act`
+- `db-fast` 
 
 
