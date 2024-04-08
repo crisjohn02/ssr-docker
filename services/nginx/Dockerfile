@@ -32,6 +32,7 @@ COPY server-blocks/act.test.conf /etc/nginx/sites-available/act.test.conf
 # COPY server-blocks/express-engine.test.conf /etc/nginx/sites-available/express-engine.test.conf
 COPY server-blocks/fluent-flask.test.conf /etc/nginx/sites-available/fluent-flask.test.conf
 COPY server-blocks/express-engine.test.conf /etc/nginx/sites-available/express-engine.test.conf
+COPY server-blocks/act-engine.test.conf /etc/nginx/sites-available/act-engine.test.conf
 
 
 
@@ -47,6 +48,7 @@ RUN ln -s /etc/nginx/sites-available/act.test.conf /etc/nginx/conf.d/act.test.co
 # RUN ln -s /etc/nginx/sites-available/express-engine.test.conf /etc/nginx/conf.d/express-engine.test.conf
 RUN ln -s /etc/nginx/sites-available/fluent-flask.test.conf /etc/nginx/conf.d/fluent-flask.test.conf
 RUN ln -s /etc/nginx/sites-available/express-engine.test.conf /etc/nginx/conf.d/express-engine.test.conf
+RUN ln -s /etc/nginx/sites-available/act-engine.test.conf /etc/nginx/conf.d/act-engine.test.conf
 
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

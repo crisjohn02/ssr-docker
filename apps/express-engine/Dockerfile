@@ -3,11 +3,12 @@ FROM node:17
 ARG WORKDIR=/var/www/express-engine.test
 
 ENV WORKDIR=${WORKDIR}
+ENV NODE_ENV=development
 
 RUN apt-get -y update \
 	&& apt-get install -y git
 
-RUN npm install -g @vue/cli @vue/cli-service-global
+RUN npm install -g @vue/cli @vue/cli-service-global @vue/cli-service
 
 WORKDIR $WORKDIR
 

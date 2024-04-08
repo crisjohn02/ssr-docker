@@ -220,6 +220,21 @@ services:
     volumes:
       - ./apps/express-engine/src:/var/www/express-engine.test
 
+  act-engine:
+    build:
+      context: ./apps/act-engine
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: act-engine
+    networks:
+      ssr-network:
+        aliases:
+          - act-engine.test
+          - act.test
+    volumes:
+      - ./apps/act-engine/src:/var/www/act-engine.test
+
+
 # ==================== PYTHON APPLICATIONS ==================
 
   fluent-flask:
@@ -244,7 +259,7 @@ services:
   phpmyadmin:
     image: phpmyadmin
     ports:
-      - 8080:80
+      - 8081:80
     environment:
       - PMA_ARBITRARY=1
     restart: unless-stopped
