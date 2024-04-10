@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db-fluent:
     image: mysql:8.3.0
