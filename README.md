@@ -56,4 +56,18 @@ Add the following lines in your hosts file `C:/Windows/System32/drivers/etc/host
 127.0.0.1	fluent-flask.test
 ```
 
+### App repos
 
+The following are the git repositories of all the apps. Please clone these inside the `src` folder inside respective app folder e.g. `~/ssr-docker/apps/fluent/` and checkout the necessary branch before bulding the containers
+
+```
+fluent (main) - https://github.com/developer-ssr/fluent.git
+fluent-widget (main) - https://github.com/crisjohn02/backend-fluent.git
+fluent-flask (main) - https://github.com/crisjohn02/fluent-flask.git
+express (dev-test) - https://github.com/developer-ssr/express-ide.git
+express-engine (master) - https://github.com/ddorateS4/explicit_v3.git
+act (integrated) - https://github.com/developer-ssr/ast-ide.git
+act-engine (version2) - https://github.com/erlzone-sssc/ast-stencil.git
+fast (main) - https://github.com/developer-ssr/fast.git
+impress (main) - https://github.com/developer-ssr/impress-ide2.git
+```

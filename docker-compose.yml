@@ -59,6 +59,21 @@ services:
       - ./data/fast:/var/lib/mysql
       - ./dumps/fast.sql.gz:/home/fast.sql.gz
 
+  db-impress:
+    image: mysql:8.3.0
+    container_name: db-impress
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=impress
+      - MYSQL_USER=local
+      - MYSQL_PASSWORD=secret
+    networks:
+      - ssr-network
+    volumes:
+      - ./data/impress:/var/lib/mysql
+      - ./dumps/impress.sql.gz:/home/impress.sql.gz
+
 # ================= LARAVEL APPLICATION SERVICES ==========================
   
   php-fluent:
@@ -127,6 +142,20 @@ services:
     volumes:
       - ./apps/fast/src:/var/www/fast.test
 
+  php-impress:
+    build:
+      context: ./apps/impress
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: php-impress
+    depends_on:
+      - db-impress
+      - php-fast
+    networks:
+      - ssr-network
+    volumes:
+      - ./apps/impress/src:/var/www/impress.test
+
 # ==================== NGINX ===========================
 
   nginx:
@@ -140,6 +169,7 @@ services:
       - php-express
       - php-act
       - php-fast
+      - php-impress
       - soketi
     ports:
       - "80:80"
@@ -152,6 +182,7 @@ services:
       - ./apps/express/src:/var/www/express.test
       - ./apps/act/src:/var/www/act.test
       - ./apps/fast/src:/var/www/fast.test
+      - ./apps/impress/src:/var/www/impress.test
 
     networks:
       ssr-network:
@@ -167,6 +198,7 @@ services:
           - fast-engine.test
           - fluent-flask.test
           - express.test
+          - impress.test
 
 # ======================= SOKETI - WEBSOCKET ===============
 
