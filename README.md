@@ -13,18 +13,21 @@ This are the docker configurations to containerised SSR platforms for developmen
 - Express - `apps/express/src/`
 - ACT -     `apps/act/src/`
 - FAST -    `apps/fast/src/`
+- Impress -    `apps/impress/src/`
 
 ## Importing databases
 
 Go to terminal and login WSL by typing the command `wsl`
 
-- Fluent - `docker exec -it db-fluent bash` to enter terminal inside container then import db by `gzip -d -c /home/gzipped_file | mysql -u local -p fluent` and input password `secret`
+- Fluent - `docker exec -it db-fluent bash` to enter terminal inside container then import db by `gzip -d -c /home/fluent.sql.gz | mysql -u local -p fluent` and input password `secret`
 
-- Express - `docker exec -it db-express bash` to enter terminal inside container then import db by `gzip -d -c /home/gzipped_file | mysql -u local -p express` and input password `secret`
+- Express - `docker exec -it db-express bash` to enter terminal inside container then import db by `gzip -d -c /home/express.sql.gz | mysql -u local -p express` and input password `secret`
 
-- ACT - `docker exec -it db-act bash` to enter terminal inside container then import db by `gzip -d -c /home/gzipped_file | mysql -u local -p act` and input password `secret`
+- ACT - `docker exec -it db-act bash` to enter terminal inside container then import db by `gzip -d -c /home/act.sql.gz | mysql -u local -p act` and input password `secret`
 
-- FAST - `docker exec -it db-fast bash` to enter terminal inside container then import db by `gzip -d -c /home/gzipped_file | mysql -u local -p fast` and input password `secret`
+- FAST - `docker exec -it db-fast bash` to enter terminal inside container then import db by `gzip -d -c /home/fast.sql.gz | mysql -u local -p fast` and input password `secret`
+
+- Impress - `docker exec -it db-impress bash` to enter terminal inside container then import db by `gzip -d -c /home/impress.sql.gz | mysql -u local -p impress` and input password `secret`
 
 
 ### Accessing Database thru phpMyAdmin
@@ -37,6 +40,7 @@ You can access the phpMyAdmin thru `http://localhost:8080`
 - `db-express`
 - `db-act`
 - `db-fast`
+- `db-impress`
 
 ### Host
 
