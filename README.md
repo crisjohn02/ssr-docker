@@ -71,7 +71,7 @@ fluent-flask (main) - https://github.com/crisjohn02/fluent-flask.git
 express (dev-test) - https://github.com/developer-ssr/express-ide.git
 express-engine (master) - https://github.com/ddorateS4/explicit_v3.git
 act (integrated) - https://github.com/developer-ssr/ast-ide.git
-act-engine (version2) - https://github.com/erlzone-sssc/ast-stencil.git
+act-engine (version2) - https://github.com/crisjohn02/ast-engine.git
 fast (main) - https://github.com/developer-ssr/fast.git
 impress (main) - https://github.com/developer-ssr/impress-ide2.git
 ```
