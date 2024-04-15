@@ -50,7 +50,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set working directory
 WORKDIR $WORKDIR
 
-
 ADD php.ini $PHP_INI_DIR/conf.d/
 
 

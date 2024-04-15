@@ -74,6 +74,9 @@ EXPOSE 5175
 # port for act vite
 EXPOSE 5176
 
+# port for impress vite
+EXPOSE 5177
+
 # port for python flask
 EXPOSE 5001
 
