@@ -1,162 +1,200 @@
 services:
-  db-fluent:
+  db-jellibean:
     image: mysql:8.3.0
-    container_name: db-fluent
+    container_name: db-jellibean
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=fluent
+      - MYSQL_DATABASE=jellibean
       - MYSQL_USER=local
       - MYSQL_PASSWORD=secret
     networks:
       - ssr-network
     volumes:
-      - ./data/fluent:/var/lib/mysql
-      - ./dumps/fluent.sql.gz:/home/fluent.sql.gz
+      - ./data/jellibean:/var/lib/mysql
+      - ./dumps/jellibean.sql.gz:/home/jellibean.sql.gz
 
-  db-express:
-    image: mysql:8.3.0
-    container_name: db-express
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=express
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network
-    volumes:
-      - ./data/express:/var/lib/mysql
-      - ./dumps/express.sql.gz:/home/express.sql.gz
+  # db-fluent:
+  #   image: mysql:8.3.0
+  #   container_name: db-fluent
+  #   restart: unless-stopped
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=secret
+  #     - MYSQL_DATABASE=fluent
+  #     - MYSQL_USER=local
+  #     - MYSQL_PASSWORD=secret
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./data/fluent:/var/lib/mysql
+  #     - ./dumps/fluent.sql.gz:/home/fluent.sql.gz
 
-  db-act:
-    image: mysql:8.3.0
-    container_name: db-act
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=act
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network
-    volumes:
-      - ./data/act:/var/lib/mysql
-      - ./dumps/act.sql.gz:/home/act.sql.gz
+  # db-express:
+  #   image: mysql:8.3.0
+  #   container_name: db-express
+  #   restart: unless-stopped
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=secret
+  #     - MYSQL_DATABASE=express
+  #     - MYSQL_USER=local
+  #     - MYSQL_PASSWORD=secret
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./data/express:/var/lib/mysql
+  #     - ./dumps/express.sql.gz:/home/express.sql.gz
 
-  db-fast:
-    image: mysql:8.3.0
-    container_name: db-fast
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=fast
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network
-    volumes:
-      - ./data/fast:/var/lib/mysql
-      - ./dumps/fast.sql.gz:/home/fast.sql.gz
+  # db-act:
+  #   image: mysql:8.3.0
+  #   container_name: db-act
+  #   restart: unless-stopped
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=secret
+  #     - MYSQL_DATABASE=act
+  #     - MYSQL_USER=local
+  #     - MYSQL_PASSWORD=secret
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./data/act:/var/lib/mysql
+  #     - ./dumps/act.sql.gz:/home/act.sql.gz
 
-  db-impress:
-    image: mysql:8.3.0
-    container_name: db-impress
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=impress
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network
-    volumes:
-      - ./data/impress:/var/lib/mysql
-      - ./dumps/impress.sql.gz:/home/impress.sql.gz
+  # db-fast:
+  #   image: mysql:8.3.0
+  #   container_name: db-fast
+  #   restart: unless-stopped
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=secret
+  #     - MYSQL_DATABASE=fast
+  #     - MYSQL_USER=local
+  #     - MYSQL_PASSWORD=secret
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./data/fast:/var/lib/mysql
+  #     - ./dumps/fast.sql.gz:/home/fast.sql.gz
 
-# ================= LARAVEL APPLICATION SERVICES ==========================
-  
-  php-fluent:
+  # db-impress:
+  #   image: mysql:8.3.0
+  #   container_name: db-impress
+  #   restart: unless-stopped
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=secret
+  #     - MYSQL_DATABASE=impress
+  #     - MYSQL_USER=local
+  #     - MYSQL_PASSWORD=secret
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./data/impress:/var/lib/mysql
+  #     - ./dumps/impress.sql.gz:/home/impress.sql.gz
+
+  # ================= LARAVEL APPLICATION SERVICES ==========================
+  php-jellibean:
     build:
-      context: ./apps/fluent
+      context: ./apps/jellibean
       dockerfile: Dockerfile
     restart: unless-stopped
-    container_name: php-fluent
+    container_name: php-jellibean
     depends_on:
-      - db-fluent
+      - db-jellibean
     networks:
       ssr-network:
         aliases:
-          - fluent.test
-          - fluent-widget.test
-          - ws.test
-          - act.test
-          - fast.test
-          - impress.test
-          - act-engine.test
-          - express-engine.test
-          - fast-engine.test
-          - fluent-flask.test
+          - jellibean.test
+          # - fluent-widget.test
+          # - ws.test
+          # - act.test
+          # - fast.test
+          # - impress.test
+          # - act-engine.test
+          # - express-engine.test
+          # - fast-engine.test
+          # - fluent-flask.test
     volumes:
-      - ./apps/fluent/src:/var/www/fluent.test
+      - ./apps/jellibean/src:/var/www/jellibean.test
 
-  php-express:
-    build:
-      context: ./apps/express
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-express
-    depends_on:
-      - db-express
-      - php-fluent
-    networks:
-      - ssr-network
-    volumes:
-      - ./apps/express/src:/var/www/express.test
+  # php-fluent:
+  #   build:
+  #     context: ./apps/fluent
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: php-fluent
+  #   depends_on:
+  #     - db-fluent
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - fluent.test
+  #         - fluent-widget.test
+  #         - ws.test
+  #         - act.test
+  #         - fast.test
+  #         - impress.test
+  #         - act-engine.test
+  #         - express-engine.test
+  #         - fast-engine.test
+  #         - fluent-flask.test
+  #   volumes:
+  #     - ./apps/fluent/src:/var/www/fluent.test
 
-  php-act:
-    build:
-      context: ./apps/act
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-act
-    depends_on:
-      - db-act
-      - php-express
-    networks:
-      - ssr-network
-    volumes:
-      - ./apps/act/src:/var/www/act.test
+  # php-express:
+  #   build:
+  #     context: ./apps/express
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: php-express
+  #   depends_on:
+  #     - db-express
+  #     - php-fluent
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./apps/express/src:/var/www/express.test
 
-  php-fast:
-    build:
-      context: ./apps/fast
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-fast
-    depends_on:
-      - db-fast
-      - php-act
-    networks:
-      - ssr-network
-    volumes:
-      - ./apps/fast/src:/var/www/fast.test
+  # php-act:
+  #   build:
+  #     context: ./apps/act
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: php-act
+  #   depends_on:
+  #     - db-act
+  #     - php-express
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./apps/act/src:/var/www/act.test
 
-  php-impress:
-    build:
-      context: ./apps/impress
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-impress
-    depends_on:
-      - db-impress
-      - php-fast
-    networks:
-      - ssr-network
-    volumes:
-      - ./apps/impress/src:/var/www/impress.test
+  # php-fast:
+  #   build:
+  #     context: ./apps/fast
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: php-fast
+  #   depends_on:
+  #     - db-fast
+  #     - php-act
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./apps/fast/src:/var/www/fast.test
 
-# ==================== NGINX ===========================
+  # php-impress:
+  #   build:
+  #     context: ./apps/impress
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: php-impress
+  #   depends_on:
+  #     - db-impress
+  #     - php-fast
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./apps/impress/src:/var/www/impress.test
+
+  # ==================== NGINX ===========================
 
   nginx:
     build:
@@ -165,127 +203,126 @@ services:
     restart: always
     container_name: nginx
     depends_on:
-      - php-fluent
-      - php-express
-      - php-act
-      - php-fast
-      - php-impress
+      - php-jellibean
+      # - php-express
+      # - php-act
+      # - php-fast
+      # - php-impress
       - soketi
     ports:
       - "80:80"
       - "5173:5173"
-      - "5174:5174"
-      - "5175:5175"
-      - "5176:5176"
-      - "5177:5177"
+      # - "5174:5174"
+      # - "5175:5175"
+      # - "5176:5176"
+      # - "5177:5177"
     volumes:
-      - ./apps/fluent/src:/var/www/fluent.test
-      - ./apps/express/src:/var/www/express.test
-      - ./apps/act/src:/var/www/act.test
-      - ./apps/fast/src:/var/www/fast.test
-      - ./apps/impress/src:/var/www/impress.test
+      - ./apps/jellibean/src:/var/www/jellibean.test
+      # - ./apps/express/src:/var/www/express.test
+      # - ./apps/act/src:/var/www/act.test
+      # - ./apps/fast/src:/var/www/fast.test
+      # - ./apps/impress/src:/var/www/impress.test
 
     networks:
       ssr-network:
         aliases:
-          - fluent.test
-          - fluent-widget.test
-          - ws.test
-          - act.test
-          - fast.test
-          - impress.test
-          - act-engine.test
-          - express-engine.test
-          - fast-engine.test
-          - fluent-flask.test
-          - express.test
-          - impress.test
+          - jellibean.test
+          # - fluent-widget.test
+          # - ws.test
+          # - act.test
+          # - fast.test
+          # - impress.test
+          # - act-engine.test
+          # - express-engine.test
+          # - fast-engine.test
+          # - fluent-flask.test
+          # - express.test
+          # - impress.test
 
-# ======================= SOKETI - WEBSOCKET ===============
+  # ======================= SOKETI - WEBSOCKET ===============
 
   soketi:
-    image: 'quay.io/soketi/soketi:latest-16-alpine'
+    image: "quay.io/soketi/soketi:latest-16-alpine"
     container_name: soketi
     ports:
       - "6001:6001"
     environment:
-      SOKETI_DEBUG: '${SOKETI_DEBUG:-1}'
-      SOKETI_METRICS_SERVER_PORT: '9601'
-      SOKETI_DEFAULT_APP_ID: 'app-id'
-      SOKETI_DEFAULT_APP_KEY: 'app-key'
-      SOKETI_DEFAULT_APP_SECRET: 'app-secret'
+      SOKETI_DEBUG: "${SOKETI_DEBUG:-1}"
+      SOKETI_METRICS_SERVER_PORT: "9601"
+      SOKETI_DEFAULT_APP_ID: "app-id"
+      SOKETI_DEFAULT_APP_KEY: "app-key"
+      SOKETI_DEFAULT_APP_SECRET: "app-secret"
     networks:
       ssr-network:
         aliases:
-          - fluent.test
-          - fluent-widget.test
-          - ws.test
+          - jellibean.test
+          # - fluent-widget.test
+          # - ws.test
 
-# ===================== NODEJS APPLICATIONS =================
+  # ===================== NODEJS APPLICATIONS =================
 
-  fluent-widget:
-    build:
-      context: ./apps/fluent-widget
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: fluent-widget
-    networks:
-      ssr-network:
-        aliases:
-          - fluent.test
-          - fluent-widget.test
-    volumes:
-      - ./apps/fluent-widget/src:/var/www/fluent-widget.test
+  # fluent-widget:
+  #   build:
+  #     context: ./apps/fluent-widget
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: fluent-widget
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - fluent.test
+  #         - fluent-widget.test
+  #   volumes:
+  #     - ./apps/fluent-widget/src:/var/www/fluent-widget.test
 
-  express-engine:
-    build:
-      context: ./apps/express-engine
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: express-engine
-    networks:
-      ssr-network:
-        aliases:
-          - express.test
-          - express-engine.test
-    volumes:
-      - ./apps/express-engine/src:/var/www/express-engine.test
+  # express-engine:
+  #   build:
+  #     context: ./apps/express-engine
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: express-engine
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - express.test
+  #         - express-engine.test
+  #   volumes:
+  #     - ./apps/express-engine/src:/var/www/express-engine.test
 
-  act-engine:
-    build:
-      context: ./apps/act-engine
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: act-engine
-    networks:
-      ssr-network:
-        aliases:
-          - act-engine.test
-          - act.test
-    volumes:
-      - ./apps/act-engine/src:/var/www/act-engine.test
+  # act-engine:
+  #   build:
+  #     context: ./apps/act-engine
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: act-engine
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - act-engine.test
+  #         - act.test
+  #   volumes:
+  #     - ./apps/act-engine/src:/var/www/act-engine.test
 
+  # ==================== PYTHON APPLICATIONS ==================
 
-# ==================== PYTHON APPLICATIONS ==================
+  # fluent-flask:
+  #   build:
+  #     context: ./apps/fluent-flask
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: fluent-flask
+  #   volumes:
+  #     - ./apps/fluent-flask/src/app:/app
+  #   environment:
+  #     - MYSQL_HOST=db-fluent
+  #     - MYSQL_PORT=3306
+  #     - MYSQL_USER=local
+  #     - MYSQL_PASSWORD=secret
+  #     - MYSQL_DATABASE=fluent
+  #   networks:
+  #     - ssr-network
 
-  fluent-flask:
-    build:
-      context: ./apps/fluent-flask
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: fluent-flask
-    volumes:
-      - ./apps/fluent-flask/src/app:/app
-    environment:
-      - MYSQL_HOST=db-fluent
-      - MYSQL_PORT=3306
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-      - MYSQL_DATABASE=fluent
-    networks:
-      - ssr-network
-  
-# ================== PHPMYADMIN ==========================
+  # ================== PHPMYADMIN ==========================
 
   phpmyadmin:
     image: phpmyadmin
