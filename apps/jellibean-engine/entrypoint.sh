@@ -18,5 +18,5 @@ echo "***********************************************************"
 echo "   Starting jellibean Engine node server                    "
 echo "***********************************************************"
 
-ionic serve --host=jellibean-engine.test --port=3333
+npm run serve
 # ionic build

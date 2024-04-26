@@ -38,10 +38,10 @@ fi
 
 # fi
 # Check fast npm dependencies
-if [ ! -d /var/www/jellibean-engine/test/node_modules ]; then
-    echo "Installing npm dependencies for jellibean-engine...."
-    cd /var/www/jellibean-engine.test && npm i
-fi
+# if [ ! -d /var/www/jellibean-engine/test/node_modules ]; then
+#     echo "Installing npm dependencies for jellibean-engine...."
+#     cd /var/www/jellibean-engine.test && npm i
+# fi
 
 # Run npm run dev for jellibean
 (cd /var/www/jellibean.test && npm run dev) &
@@ -59,6 +59,6 @@ fi
 # (cd /var/www/fast.test && npm run dev) &
 
 # Run npm run dev for jellibean
-(cd /var/www/jellibean-engine.test && npm ionice serve) &
+# (cd /var/www/jellibean-engine.test && npm ionice serve) &
 
 /usr/sbin/nginx -g "daemon off;"

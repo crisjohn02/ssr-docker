@@ -218,6 +218,7 @@ services:
       # - "5177:5177"
     volumes:
       - ./apps/jellibean/src:/var/www/jellibean.test
+      - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
       # - ./apps/express/src:/var/www/express.test
       # - ./apps/act/src:/var/www/act.test
       # - ./apps/fast/src:/var/www/fast.test
@@ -261,6 +262,17 @@ services:
 
   # ===================== NODEJS APPLICATIONS =================
 
+  jellibean-engine:
+    build: 
+      context: ./apps/jellibean-engine
+      dockerfile: Dockerfile
+    restart: always
+    container_name: jellibean-engine
+    networks:
+      - ssr-network
+    volumes:
+      - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
+
   # fluent-widget:
   #   build:
   #     context: ./apps/fluent-widget
@@ -303,19 +315,19 @@ services:
   #   volumes:
   #     - ./apps/act-engine/src:/var/www/act-engine.test
 
-  jellibean-engine:
-    build:
-      context: ./apps/jellibean-engine
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: jellibean-engine
-    networks:
-      ssr-network:
-        aliases:
-          - jellibean-engine.test
-          - jellibean.test
-    volumes:
-      - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
+  # jellibean-engine:
+  #   build:
+  #     context: ./apps/jellibean-engine
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: jellibean-engine
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - jellibean-engine.test
+  #         - jellibean.test
+  #   volumes:
+  #     - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
 
   # ==================== PYTHON APPLICATIONS ==================
 
