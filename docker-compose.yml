@@ -12,7 +12,7 @@ services:
       - ssr-network
     volumes:
       - ./data/jellibean:/var/lib/mysql
-      - ./dumps/jellibean.sql.gz:/home/jellibean.sql.gz
+      - ./dumps/jellibean.sql:/home/jellibean.sql
 
   # db-fluent:
   #   image: mysql:8.3.0
@@ -302,6 +302,20 @@ services:
   #         - act.test
   #   volumes:
   #     - ./apps/act-engine/src:/var/www/act-engine.test
+
+  jellibean-engine:
+    build:
+      context: ./apps/jellibean-engine
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: jellibean-engine
+    networks:
+      ssr-network:
+        aliases:
+          - jellibean-engine.test
+          - jellibean.test
+    volumes:
+      - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
 
   # ==================== PYTHON APPLICATIONS ==================
 

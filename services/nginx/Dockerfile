@@ -35,6 +35,7 @@ COPY server-blocks/jellibean.test.conf /etc/nginx/sites-available/jellibean.test
 # COPY server-blocks/fluent-flask.test.conf /etc/nginx/sites-available/fluent-flask.test.conf
 # COPY server-blocks/express-engine.test.conf /etc/nginx/sites-available/express-engine.test.conf
 # COPY server-blocks/act-engine.test.conf /etc/nginx/sites-available/act-engine.test.conf
+COPY server-blocks/jellibean-engine.test.conf /etc/nginx/sites-available/jellibean-engine.test.conf
 
 
 RUN ln -s /etc/nginx/sites-available/jellibean.test.conf /etc/nginx/conf.d/jellibean.test.conf
@@ -52,6 +53,7 @@ RUN ln -s /etc/nginx/sites-available/jellibean.test.conf /etc/nginx/conf.d/jelli
 # RUN ln -s /etc/nginx/sites-available/fluent-flask.test.conf /etc/nginx/conf.d/fluent-flask.test.conf
 # RUN ln -s /etc/nginx/sites-available/express-engine.test.conf /etc/nginx/conf.d/express-engine.test.conf
 # RUN ln -s /etc/nginx/sites-available/act-engine.test.conf /etc/nginx/conf.d/act-engine.test.conf
+RUN ln -s /etc/nginx/sites-available/jellibean-engine.test.conf /etc/nginx/conf.d/jellibean-engine.test.conf
 
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
