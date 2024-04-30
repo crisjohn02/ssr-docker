@@ -68,6 +68,9 @@ EXPOSE 6001
 # port for jellibean vite
 EXPOSE 5173
 
+# port for jellibean network
+EXPOSE 8001
+
 # port for express vite
 # EXPOSE 5174
 

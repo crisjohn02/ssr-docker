@@ -208,10 +208,11 @@ services:
       # - php-act
       # - php-fast
       # - php-impress
-      - soketi
+      # - soketi
     ports:
       - "80:80"
       - "5173:5173"
+      - "8001:8001"
       # - "5174:5174"
       # - "5175:5175"
       # - "5176:5176"
@@ -242,21 +243,21 @@ services:
 
   # ======================= SOKETI - WEBSOCKET ===============
 
-  soketi:
-    image: "quay.io/soketi/soketi:latest-16-alpine"
-    container_name: soketi
-    ports:
-      - "6001:6001"
-    environment:
-      SOKETI_DEBUG: "${SOKETI_DEBUG:-1}"
-      SOKETI_METRICS_SERVER_PORT: "9601"
-      SOKETI_DEFAULT_APP_ID: "app-id"
-      SOKETI_DEFAULT_APP_KEY: "app-key"
-      SOKETI_DEFAULT_APP_SECRET: "app-secret"
-    networks:
-      ssr-network:
-        aliases:
-          - jellibean.test
+  # soketi:
+  #   image: "quay.io/soketi/soketi:latest-16-alpine"
+  #   container_name: soketi
+  #   ports:
+  #     - "6001:6001"
+  #   environment:
+  #     SOKETI_DEBUG: "${SOKETI_DEBUG:-1}"
+  #     SOKETI_METRICS_SERVER_PORT: "9601"
+  #     SOKETI_DEFAULT_APP_ID: "app-id"
+  #     SOKETI_DEFAULT_APP_KEY: "app-key"
+  #     SOKETI_DEFAULT_APP_SECRET: "app-secret"
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - jellibean.test
           # - fluent-widget.test
           # - ws.test
 
