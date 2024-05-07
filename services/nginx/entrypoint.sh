@@ -30,6 +30,12 @@ if [ ! -d /var/www/fast/test/node_modules ]; then
     cd /var/www/fast.test && npm i
 fi
 
+# Check if the node_modules folder exists in impress
+if [ ! -d /var/www/impress/test/node_modules ]; then
+    echo "Installing npm dependencies for impress...."
+    cd /var/www/impress.test && npm i
+fi
+
 # Run npm run dev for fluent
 (cd /var/www/fluent.test && npm run dev) &
 
@@ -41,5 +47,8 @@ fi
 
 # Run npm run dev for fast
 (cd /var/www/fast.test && npm run dev) &
+
+# Run npm run dev for impress
+(cd /var/www/impress.test && npm run dev) &
 
 /usr/sbin/nginx -g "daemon off;"

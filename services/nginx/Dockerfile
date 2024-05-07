@@ -80,4 +80,6 @@ EXPOSE 5177
 # port for python flask
 EXPOSE 5001
 
+EXPOSE 8001
+
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
