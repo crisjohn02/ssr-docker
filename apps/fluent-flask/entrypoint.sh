@@ -10,4 +10,4 @@ APP_WORKERS=2
 
 # Comment this two lines below for development
 echo -e "===== Local server running at http://${APP_HOST}:${APP_PORT} with ${APP_WORKERS} workers ====="
-python app.py
+python app2.py

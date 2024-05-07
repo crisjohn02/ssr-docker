@@ -21,7 +21,7 @@ RUN apt-get update && apt install nano
 
 # Copy server blocks and create symbolic link
 COPY server-blocks/fluent.test.conf /etc/nginx/sites-available/fluent.test.conf
-# COPY server-blocks/express.test.conf /etc/nginx/sites-available/express.test.conf
+COPY server-blocks/express.test.conf /etc/nginx/sites-available/express.test.conf
 COPY server-blocks/fluent-widget.test.conf /etc/nginx/sites-available/fluent-widget.test.conf
 COPY server-blocks/ws.test.conf /etc/nginx/sites-available/ws.test.conf
 # COPY server-blocks/impress.test.conf /etc/nginx/sites-available/impress.test.conf
@@ -38,7 +38,7 @@ COPY server-blocks/act-engine.test.conf /etc/nginx/sites-available/act-engine.te
 
 
 RUN ln -s /etc/nginx/sites-available/fluent.test.conf /etc/nginx/conf.d/fluent.test.conf
-# RUN ln -s /etc/nginx/sites-available/express.test.conf /etc/nginx/conf.d/express.test.conf
+RUN ln -s /etc/nginx/sites-available/express.test.conf /etc/nginx/conf.d/express.test.conf
 RUN ln -s /etc/nginx/sites-available/fluent-widget.test.conf /etc/nginx/conf.d/fluent-widget.test.conf
 RUN ln -s /etc/nginx/sites-available/ws.test.conf /etc/nginx/conf.d/ws.test.conf
 # RUN ln -s /etc/nginx/sites-available/impress.test.conf /etc/nginx/conf.d/impress.test.conf
