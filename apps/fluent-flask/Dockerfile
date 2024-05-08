@@ -1,17 +1,5 @@
 # start by pulling the python image
-FROM python:3.10
-
-# copy the requirements file into the image
-COPY ./requirements.txt /app/requirements.txt
-
-# switch working directory
-WORKDIR /app
-
-# install the dependencies and packages in the requirements file
-RUN pip install -r requirements.txt
-
-# copy every content from the local file to the image
-# COPY ./app /app
+FROM crisjohn02/python3.10:v1-release
 
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
