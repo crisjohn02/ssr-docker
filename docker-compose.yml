@@ -60,10 +60,7 @@ services:
       ssr-network2:
         aliases:
           - fluent.test
-          - fluent-widget.test
-          - ws.test
           - act.test
-          - act-engine.test
           - fluent-flask.test
           - express.test
     volumes:
@@ -109,7 +106,6 @@ services:
     depends_on:
       - php-fluent
       - php-act
-      - soketi
       - php-express
     ports:
       - "80:80"
@@ -117,7 +113,6 @@ services:
       - "5174:5174"
       - "5176:5176"
       - "8001:8001"
-      - "6001:6001"
     volumes:
       - ./apps/fluent/src:/var/www/fluent.test
       - ./apps/express/src:/var/www/express.test
@@ -128,7 +123,6 @@ services:
         aliases:
           - fluent.test
           - fluent-widget.test
-          - ws.test
           - act.test
           - act-engine.test
           - fluent-flask.test
