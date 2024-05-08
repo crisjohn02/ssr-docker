@@ -7,6 +7,8 @@ RUN ln -s /usr/local/bin/entrypoint.sh /
 
 EXPOSE 5001
 
+WORKDIR /app
+
 # configure the container to run in an executed manner
 ENTRYPOINT [ "entrypoint.sh" ]
 
