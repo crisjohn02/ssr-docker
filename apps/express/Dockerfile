@@ -1,6 +1,6 @@
 FROM crisjohn02/php8.2:v1-release
 
-ARG WORKDIR=/var/www/fluent.test
+ARG WORKDIR=/var/www/express.test
 ENV DOCUMENT_ROOT=${WORKDIR}
 ENV LARAVEL_PROCS_NUMBER=1
 ARG HOST_UID=1000
