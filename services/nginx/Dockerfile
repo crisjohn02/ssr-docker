@@ -20,8 +20,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt install nano
 
 # Copy server blocks and create symbolic link
-COPY server-blocks/jellibean.test.conf /etc/nginx/sites-available/jellibean.test.conf
-# COPY server-blocks/fluent.test.conf /etc/nginx/sites-available/fluent.test.conf
+# COPY server-blocks/jellibean.test.conf /etc/nginx/sites-available/jellibean.test.conf
+COPY server-blocks/jellybean.test.conf /etc/nginx/sites-available/jellybean.test.conf
 # COPY server-blocks/express.test.conf /etc/nginx/sites-available/express.test.conf
 # COPY server-blocks/fluent-widget.test.conf /etc/nginx/sites-available/fluent-widget.test.conf
 # COPY server-blocks/ws.test.conf /etc/nginx/sites-available/ws.test.conf
@@ -35,11 +35,11 @@ COPY server-blocks/jellibean.test.conf /etc/nginx/sites-available/jellibean.test
 # COPY server-blocks/fluent-flask.test.conf /etc/nginx/sites-available/fluent-flask.test.conf
 # COPY server-blocks/express-engine.test.conf /etc/nginx/sites-available/express-engine.test.conf
 # COPY server-blocks/act-engine.test.conf /etc/nginx/sites-available/act-engine.test.conf
-COPY server-blocks/jellibean-engine.test.conf /etc/nginx/sites-available/jellibean-engine.test.conf
+# COPY server-blocks/jellibean-engine.test.conf /etc/nginx/sites-available/jellibean-engine.test.conf
 
 
-RUN ln -s /etc/nginx/sites-available/jellibean.test.conf /etc/nginx/conf.d/jellibean.test.conf
-# RUN ln -s /etc/nginx/sites-available/fluent.test.conf /etc/nginx/conf.d/fluent.test.conf
+# RUN ln -s /etc/nginx/sites-available/jellibean.test.conf /etc/nginx/conf.d/jellibean.test.conf
+RUN ln -s /etc/nginx/sites-available/jellybean.test.conf /etc/nginx/conf.d/jellybean.test.conf
 # RUN ln -s /etc/nginx/sites-available/express.test.conf /etc/nginx/conf.d/express.test.conf
 # RUN ln -s /etc/nginx/sites-available/fluent-widget.test.conf /etc/nginx/conf.d/fluent-widget.test.conf
 # RUN ln -s /etc/nginx/sites-available/ws.test.conf /etc/nginx/conf.d/ws.test.conf
@@ -53,7 +53,7 @@ RUN ln -s /etc/nginx/sites-available/jellibean.test.conf /etc/nginx/conf.d/jelli
 # RUN ln -s /etc/nginx/sites-available/fluent-flask.test.conf /etc/nginx/conf.d/fluent-flask.test.conf
 # RUN ln -s /etc/nginx/sites-available/express-engine.test.conf /etc/nginx/conf.d/express-engine.test.conf
 # RUN ln -s /etc/nginx/sites-available/act-engine.test.conf /etc/nginx/conf.d/act-engine.test.conf
-RUN ln -s /etc/nginx/sites-available/jellibean-engine.test.conf /etc/nginx/conf.d/jellibean-engine.test.conf
+# RUN ln -s /etc/nginx/sites-available/jellibean-engine.test.conf /etc/nginx/conf.d/jellibean-engine.test.conf
 
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -71,8 +71,14 @@ EXPOSE 5173
 # port for jellibean network
 EXPOSE 8001
 
-# port for express vite
-# EXPOSE 5174
+# port for jellibean-engine network
+EXPOSE 8002
+
+# port for jellybean
+EXPOSE 5174
+
+# port for jellybean network
+EXPOSE 8003
 
 # # port for fast vite
 # EXPOSE 5175

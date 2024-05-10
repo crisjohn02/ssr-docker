@@ -14,20 +14,20 @@ services:
       - ./data/jellibean:/var/lib/mysql
       - ./dumps/jellibean.sql:/home/jellibean.sql
 
-  # db-fluent:
-  #   image: mysql:8.3.0
-  #   container_name: db-fluent
-  #   restart: unless-stopped
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=secret
-  #     - MYSQL_DATABASE=fluent
-  #     - MYSQL_USER=local
-  #     - MYSQL_PASSWORD=secret
-  #   networks:
-  #     - ssr-network
-  #   volumes:
-  #     - ./data/fluent:/var/lib/mysql
-  #     - ./dumps/fluent.sql.gz:/home/fluent.sql.gz
+  db-jellybean:
+    image: mysql:8.3.0
+    container_name: db-jellybean
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=jellybean
+      - MYSQL_USER=local
+      - MYSQL_PASSWORD=secret
+    networks:
+      - ssr-network
+    volumes:
+      - ./data/jellybean:/var/lib/jellybean
+      - ./dumps/jellibean.sql:/home/jellybean.sql
 
   # db-express:
   #   image: mysql:8.3.0
@@ -90,18 +90,42 @@ services:
   #     - ./dumps/impress.sql.gz:/home/impress.sql.gz
 
   # ================= LARAVEL APPLICATION SERVICES ==========================
-  php-jellibean:
+  # php-jellibean:
+  #   build:
+  #     context: ./apps/jellibean
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: php-jellibean
+  #   depends_on:
+  #     - db-jellibean
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - jellibean.test
+  #         # - fluent-widget.test
+  #         # - ws.test
+  #         # - act.test
+  #         # - fast.test
+  #         # - impress.test
+  #         # - act-engine.test
+  #         # - express-engine.test
+  #         # - fast-engine.test
+  #         # - fluent-flask.test
+  #   volumes:
+  #     - ./apps/jellibean/src:/var/www/jellibean.test
+
+  php-jellybean:
     build:
-      context: ./apps/jellibean
+      context: ./apps/jellybean
       dockerfile: Dockerfile
     restart: unless-stopped
-    container_name: php-jellibean
+    container_name: php-jellybean
     depends_on:
-      - db-jellibean
+      - db-jellybean
     networks:
       ssr-network:
         aliases:
-          - jellibean.test
+          - jellybean.test
           # - fluent-widget.test
           # - ws.test
           # - act.test
@@ -112,31 +136,7 @@ services:
           # - fast-engine.test
           # - fluent-flask.test
     volumes:
-      - ./apps/jellibean/src:/var/www/jellibean.test
-
-  # php-fluent:
-  #   build:
-  #     context: ./apps/fluent
-  #     dockerfile: Dockerfile
-  #   restart: unless-stopped
-  #   container_name: php-fluent
-  #   depends_on:
-  #     - db-fluent
-  #   networks:
-  #     ssr-network:
-  #       aliases:
-  #         - fluent.test
-  #         - fluent-widget.test
-  #         - ws.test
-  #         - act.test
-  #         - fast.test
-  #         - impress.test
-  #         - act-engine.test
-  #         - express-engine.test
-  #         - fast-engine.test
-  #         - fluent-flask.test
-  #   volumes:
-  #     - ./apps/fluent/src:/var/www/fluent.test
+      - ./apps/jellybean/src:/var/www/jellybean.test
 
   # php-express:
   #   build:
@@ -203,7 +203,8 @@ services:
     restart: always
     container_name: nginx
     depends_on:
-      - php-jellibean
+      # - php-jellibean
+      - php-jellybean
       # - php-express
       # - php-act
       # - php-fast
@@ -213,14 +214,16 @@ services:
       - "80:80"
       - "5173:5173"
       - "8001:8001"
-      # - "5174:5174"
+      - "8002:8002"
+      - "5174:5174"
+      - "8003:8003"
       # - "5175:5175"
       # - "5176:5176"
       # - "5177:5177"
     volumes:
-      - ./apps/jellibean/src:/var/www/jellibean.test
-      - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
-      # - ./apps/express/src:/var/www/express.test
+      # - ./apps/jellibean/src:/var/www/jellibean.test
+      # - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
+      - ./apps/jellybean/src:/var/www/jellybean.test
       # - ./apps/act/src:/var/www/act.test
       # - ./apps/fast/src:/var/www/fast.test
       # - ./apps/impress/src:/var/www/impress.test
@@ -228,8 +231,8 @@ services:
     networks:
       ssr-network:
         aliases:
-          - jellibean.test
-          # - fluent-widget.test
+          # - jellibean.test
+          - jellybean.test
           # - ws.test
           # - act.test
           # - fast.test
@@ -263,16 +266,16 @@ services:
 
   # ===================== NODEJS APPLICATIONS =================
 
-  jellibean-engine:
-    build: 
-      context: ./apps/jellibean-engine
-      dockerfile: Dockerfile
-    restart: always
-    container_name: jellibean-engine
-    networks:
-      - ssr-network
-    volumes:
-      - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
+  # jellibean-engine:
+  #   build: 
+  #     context: ./apps/jellibean-engine
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   container_name: jellibean-engine
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
 
   # fluent-widget:
   #   build:
