@@ -20,8 +20,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt install nano
 
 # Copy server blocks and create symbolic link
-# COPY server-blocks/jellibean.test.conf /etc/nginx/sites-available/jellibean.test.conf
-COPY server-blocks/jellybean.test.conf /etc/nginx/sites-available/jellybean.test.conf
+COPY server-blocks/jellibean.test.conf /etc/nginx/sites-available/jellibean.test.conf
+# COPY server-blocks/jellybean.test.conf /etc/nginx/sites-available/jellybean.test.conf
 # COPY server-blocks/express.test.conf /etc/nginx/sites-available/express.test.conf
 # COPY server-blocks/fluent-widget.test.conf /etc/nginx/sites-available/fluent-widget.test.conf
 # COPY server-blocks/ws.test.conf /etc/nginx/sites-available/ws.test.conf
@@ -38,8 +38,8 @@ COPY server-blocks/jellybean.test.conf /etc/nginx/sites-available/jellybean.test
 # COPY server-blocks/jellibean-engine.test.conf /etc/nginx/sites-available/jellibean-engine.test.conf
 
 
-# RUN ln -s /etc/nginx/sites-available/jellibean.test.conf /etc/nginx/conf.d/jellibean.test.conf
-RUN ln -s /etc/nginx/sites-available/jellybean.test.conf /etc/nginx/conf.d/jellybean.test.conf
+RUN ln -s /etc/nginx/sites-available/jellibean.test.conf /etc/nginx/conf.d/jellibean.test.conf
+# RUN ln -s /etc/nginx/sites-available/jellybean.test.conf /etc/nginx/conf.d/jellybean.test.conf
 # RUN ln -s /etc/nginx/sites-available/express.test.conf /etc/nginx/conf.d/express.test.conf
 # RUN ln -s /etc/nginx/sites-available/fluent-widget.test.conf /etc/nginx/conf.d/fluent-widget.test.conf
 # RUN ln -s /etc/nginx/sites-available/ws.test.conf /etc/nginx/conf.d/ws.test.conf

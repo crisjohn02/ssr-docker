@@ -14,20 +14,20 @@ services:
       - ./data/jellibean:/var/lib/mysql
       - ./dumps/jellibean.sql:/home/jellibean.sql
 
-  db-jellybean:
-    image: mysql:8.3.0
-    container_name: db-jellybean
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=jellybean
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network
-    volumes:
-      - ./data/jellybean:/var/lib/jellybean
-      - ./dumps/jellibean.sql:/home/jellybean.sql
+  # db-jellybean:
+  #   image: mysql:8.3.0
+  #   container_name: db-jellybean
+  #   restart: unless-stopped
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=secret
+  #     - MYSQL_DATABASE=jellybean
+  #     - MYSQL_USER=local
+  #     - MYSQL_PASSWORD=secret
+  #   networks:
+  #     - ssr-network
+  #   volumes:
+  #     - ./data/jellybean:/var/lib/jellybean
+  #     - ./dumps/jellibean.sql:/home/jellybean.sql
 
   # db-express:
   #   image: mysql:8.3.0
@@ -90,42 +90,18 @@ services:
   #     - ./dumps/impress.sql.gz:/home/impress.sql.gz
 
   # ================= LARAVEL APPLICATION SERVICES ==========================
-  # php-jellibean:
-  #   build:
-  #     context: ./apps/jellibean
-  #     dockerfile: Dockerfile
-  #   restart: unless-stopped
-  #   container_name: php-jellibean
-  #   depends_on:
-  #     - db-jellibean
-  #   networks:
-  #     ssr-network:
-  #       aliases:
-  #         - jellibean.test
-  #         # - fluent-widget.test
-  #         # - ws.test
-  #         # - act.test
-  #         # - fast.test
-  #         # - impress.test
-  #         # - act-engine.test
-  #         # - express-engine.test
-  #         # - fast-engine.test
-  #         # - fluent-flask.test
-  #   volumes:
-  #     - ./apps/jellibean/src:/var/www/jellibean.test
-
-  php-jellybean:
+  php-jellibean:
     build:
-      context: ./apps/jellybean
+      context: ./apps/jellibean
       dockerfile: Dockerfile
     restart: unless-stopped
-    container_name: php-jellybean
+    container_name: php-jellibean
     depends_on:
-      - db-jellybean
+      - db-jellibean
     networks:
       ssr-network:
         aliases:
-          - jellybean.test
+          - jellibean.test
           # - fluent-widget.test
           # - ws.test
           # - act.test
@@ -136,7 +112,31 @@ services:
           # - fast-engine.test
           # - fluent-flask.test
     volumes:
-      - ./apps/jellybean/src:/var/www/jellybean.test
+      - ./apps/jellibean/src:/var/www/jellibean.test
+
+  # php-jellybean:
+  #   build:
+  #     context: ./apps/jellybean
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   container_name: php-jellybean
+  #   depends_on:
+  #     - db-jellybean
+  #   networks:
+  #     ssr-network:
+  #       aliases:
+  #         - jellybean.test
+  #         # - fluent-widget.test
+  #         # - ws.test
+  #         # - act.test
+  #         # - fast.test
+  #         # - impress.test
+  #         # - act-engine.test
+  #         # - express-engine.test
+  #         # - fast-engine.test
+  #         # - fluent-flask.test
+  #   volumes:
+  #     - ./apps/jellybean/src:/var/www/jellybean.test
 
   # php-express:
   #   build:
@@ -203,8 +203,8 @@ services:
     restart: always
     container_name: nginx
     depends_on:
-      # - php-jellibean
-      - php-jellybean
+      - php-jellibean
+      # - php-jellybean
       # - php-express
       # - php-act
       # - php-fast
@@ -221,9 +221,9 @@ services:
       # - "5176:5176"
       # - "5177:5177"
     volumes:
-      # - ./apps/jellibean/src:/var/www/jellibean.test
+      - ./apps/jellibean/src:/var/www/jellibean.test
       # - ./apps/jellibean-engine/src:/var/www/jellibean-engine.test
-      - ./apps/jellybean/src:/var/www/jellybean.test
+      # - ./apps/jellybean/src:/var/www/jellybean.test
       # - ./apps/act/src:/var/www/act.test
       # - ./apps/fast/src:/var/www/fast.test
       # - ./apps/impress/src:/var/www/impress.test
@@ -231,8 +231,8 @@ services:
     networks:
       ssr-network:
         aliases:
-          # - jellibean.test
-          - jellybean.test
+          - jellibean.test
+          # - jellybean.test
           # - ws.test
           # - act.test
           # - fast.test
