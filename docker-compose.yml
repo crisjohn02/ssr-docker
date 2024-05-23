@@ -43,6 +43,21 @@ services:
     volumes:
       - ./data/act:/var/lib/mysql
       - ./dumps/act.sql.gz:/home/act.sql.gz
+  
+  db-fast:
+    image: mysql:8.3.0
+    container_name: db-fast
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=fast
+      - MYSQL_USER=local
+      - MYSQL_PASSWORD=secret
+    networks:
+      - ssr-network2
+    volumes:
+      - ./data/fast:/var/lib/mysql
+      - ./dumps/fast.sql.gz:/home/fast.sql.gz
 
 
 
@@ -63,6 +78,7 @@ services:
           - act.test
           - fluent-flask.test
           - express.test
+          - fast.test
     volumes:
       - ./apps/fluent/src:/var/www/fluent.test
 
@@ -94,6 +110,20 @@ services:
     volumes:
       - ./apps/act/src:/var/www/act.test
 
+  php-fast:
+    build:
+      context: ./apps/fast
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: php-fast
+    depends_on:
+      - db-fast
+      - php-act
+    networks:
+      - ssr-network2
+    volumes:
+      - ./apps/fast/src:/var/www/fast.test
+
 
 # ==================== NGINX ===========================
 
@@ -107,16 +137,19 @@ services:
       - php-fluent
       - php-act
       - php-express
+      - php-fast
     ports:
       - "80:80"
       - "5173:5173"
       - "5174:5174"
+      - "5175:5175"
       - "5176:5176"
       - "8001:8001"
     volumes:
       - ./apps/fluent/src:/var/www/fluent.test
       - ./apps/express/src:/var/www/express.test
       - ./apps/act/src:/var/www/act.test
+      - ./apps/fast/src:/var/www/fast.test
 
     networks:
       ssr-network2:
@@ -127,6 +160,7 @@ services:
           - act-engine.test
           - fluent-flask.test
           - express.test
+          - fast.test
 
 
 # ==================== PYTHON APPLICATIONS ==================
@@ -145,6 +179,9 @@ services:
       - MYSQL_USER=local
       - MYSQL_PASSWORD=secret
       - MYSQL_DATABASE=fluent
+      - ALLOWED_IPS=
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - ssr-network2
   
@@ -159,6 +196,24 @@ services:
     restart: unless-stopped
     networks:
       - ssr-network2
+
+  soketi:
+    image: 'quay.io/soketi/soketi:latest-16-alpine'
+    container_name: soketi
+    environment:
+      SOKETI_DEBUG: '${SOKETI_DEBUG:-1}'
+      SOKETI_METRICS_SERVER_PORT: '9601'
+      SOKETI_DEFAULT_APP_ID: 'app-id'
+      SOKETI_DEFAULT_APP_KEY: 'app-key'
+      SOKETI_DEFAULT_APP_SECRET: 'app-secret'
+    ports:
+      - "6001:6001"
+    networks:
+      ssr-network2:
+        aliases:
+          - fluent.test
+          - fluent-widget.test
+          - ws.test
 
 networks:
   ssr-network2:

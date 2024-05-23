@@ -27,6 +27,12 @@ if [ ! -d /var/www/act.test/node_modules ]; then
     cd /var/www/act.test && npm i
 fi
 
+# Check fast npm dependencies
+if [ ! -d /var/www/fast.test/node_modules ]; then
+    echo "Installing npm dependencies for fast...."
+    cd /var/www/fast.test && npm i
+fi
+
 # Run npm run dev for fluent
 (cd /var/www/fluent.test && npm run dev) &
 
@@ -35,5 +41,8 @@ fi
 
 # Run npm run dev for act
 (cd /var/www/act.test && npm run dev) &
+
+# Run npm run dev for fast
+(cd /var/www/fast.test && npm run dev) &
 
 /usr/sbin/nginx -g "daemon off;"
