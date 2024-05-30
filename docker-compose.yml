@@ -59,6 +59,20 @@ services:
       - ./data/fast:/var/lib/mysql
       - ./dumps/fast.sql.gz:/home/fast.sql.gz
 
+  db-rel:
+    image: mariadb:latest
+    container_name: db-rel
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=fluent
+      - MYSQL_USER=local
+      - MYSQL_PASSWORD=secret
+    networks:
+      - ssr-network2
+    volumes:
+      - ./data/rel:/var/lib/mysql
+
 
 
 # ================= LARAVEL APPLICATION SERVICES ==========================
@@ -124,6 +138,19 @@ services:
     volumes:
       - ./apps/fast/src:/var/www/fast.test
 
+  php-rel:
+    build:
+      context: ./apps/rel
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: php-rel
+    depends_on:
+      - db-rel
+    networks:
+      - ssr-network2
+    volumes:
+      - ./apps/rel/src:/var/www/rel.test
+
 
 # ==================== NGINX ===========================
 
@@ -150,6 +177,7 @@ services:
       - ./apps/express/src:/var/www/express.test
       - ./apps/act/src:/var/www/act.test
       - ./apps/fast/src:/var/www/fast.test
+      - ./apps/rel/src:/var/www/rel.test
 
     networks:
       ssr-network2:
@@ -161,6 +189,7 @@ services:
           - fluent-flask.test
           - express.test
           - fast.test
+          - rel.test
 
 
 # ==================== PYTHON APPLICATIONS ==================
