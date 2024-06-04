@@ -93,6 +93,8 @@ services:
           - fluent-flask.test
           - express.test
           - fast.test
+          - fluent-widget.test
+          - ws.test
     volumes:
       - ./apps/fluent/src:/var/www/fluent.test
 
@@ -243,6 +245,34 @@ services:
           - fluent.test
           - fluent-widget.test
           - ws.test
+
+  express-engine:
+    build:
+      context: ./apps/express-engine
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: express-engine
+    networks:
+      ssr-network2:
+        aliases:
+          - express.test
+          - express-engine.test
+    volumes:
+      - ./apps/express-engine/src:/var/www/express-engine.test
+
+  fluent-widget:
+    build:
+      context: ./apps/fluent-widget
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: fluent-widget
+    networks:
+      ssr-network2:
+        aliases:
+          - fluent.test
+          - fluent-widget.test
+    volumes:
+      - ./apps/fluent-widget/src:/var/www/fluent-widget.test
 
 networks:
   ssr-network2:
