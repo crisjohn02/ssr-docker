@@ -211,10 +211,13 @@ services:
       - MYSQL_PASSWORD=secret
       - MYSQL_DATABASE=fluent
       - ALLOWED_IPS=
+      - APP_HOST_API=http://fluent.test/api/
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
-      - ssr-network2
+      ssr-network2:
+        aliases:
+          - fluent.test
   
 # ================== PHPMYADMIN ==========================
 
