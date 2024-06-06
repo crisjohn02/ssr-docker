@@ -1,67 +1,7 @@
 services:
-  db-fluent:
-    image: mysql:8.3.0
-    container_name: db-fluent
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=fluent
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network2
-    volumes:
-      - ./data/fluent:/var/lib/mysql
-      - ./dumps/fluent.sql.gz:/home/fluent.sql.gz
-
-  db-express:
-    image: mysql:8.3.0
-    container_name: db-express
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=express
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network2
-    volumes:
-      - ./data/express:/var/lib/mysql
-      - ./dumps/express.sql.gz:/home/express.sql.gz
-
-  db-act:
-    image: mysql:8.3.0
-    container_name: db-act
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=act
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network2
-    volumes:
-      - ./data/act:/var/lib/mysql
-      - ./dumps/act.sql.gz:/home/act.sql.gz
-  
-  db-fast:
-    image: mysql:8.3.0
-    container_name: db-fast
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=fast
-      - MYSQL_USER=local
-      - MYSQL_PASSWORD=secret
-    networks:
-      - ssr-network2
-    volumes:
-      - ./data/fast:/var/lib/mysql
-      - ./dumps/fast.sql.gz:/home/fast.sql.gz
-
-  db-rel:
+  dbs:
     image: mariadb:latest
-    container_name: db-rel
+    container_name: dbs
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=secret
@@ -71,89 +11,37 @@ services:
     networks:
       - ssr-network2
     volumes:
-      - ./data/rel:/var/lib/mysql
-
-
+      - ./data:/var/lib/mysql
+      - ./dumps:/dumps
 
 # ================= LARAVEL APPLICATION SERVICES ==========================
-  
-  php-fluent:
+
+  php82:
     build:
-      context: ./apps/fluent
-      dockerfile: Dockerfile
+      context: ./apps
+      dockerfile: php82.Dockerfile
     restart: unless-stopped
-    container_name: php-fluent
+    container_name: php82
     depends_on:
-      - db-fluent
+      - dbs
+    volumes:
+      - ./apps/fluent/src:/var/www/fluent.test
+      - ./apps/express/src:/var/www/express.test
+      - ./apps/act/src:/var/www/act.test
+      - ./apps/fast/src:/var/www/fast.test
+      - ./apps/rel/src:/var/www/rel.test
     networks:
       ssr-network2:
         aliases:
           - fluent.test
+          - fluent-widget.test
           - act.test
+          - act-engine.test
           - fluent-flask.test
           - express.test
           - fast.test
-          - fluent-widget.test
-          - ws.test
-    volumes:
-      - ./apps/fluent/src:/var/www/fluent.test
-
-  php-express:
-    build:
-      context: ./apps/express
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-express
-    depends_on:
-      - db-express
-      - php-fluent
-    networks:
-      - ssr-network2
-    volumes:
-      - ./apps/express/src:/var/www/express.test
-
-  php-act:
-    build:
-      context: ./apps/act
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-act
-    depends_on:
-      - db-act
-      - php-express
-    networks:
-      - ssr-network2
-    volumes:
-      - ./apps/act/src:/var/www/act.test
-
-  php-fast:
-    build:
-      context: ./apps/fast
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-fast
-    depends_on:
-      - db-fast
-      - php-act
-    networks:
-      - ssr-network2
-    volumes:
-      - ./apps/fast/src:/var/www/fast.test
-
-  php-rel:
-    build:
-      context: ./apps/rel
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: php-rel
-    depends_on:
-      - db-rel
-    networks:
-      - ssr-network2
-    volumes:
-      - ./apps/rel/src:/var/www/rel.test
-
-
+          - rel.test
+      
 # ==================== NGINX ===========================
 
   nginx:
@@ -163,10 +51,8 @@ services:
     restart: always
     container_name: nginx
     depends_on:
-      - php-fluent
-      - php-act
-      - php-express
-      - php-fast
+      - php82
+      - dbs
     ports:
       - "80:80"
       - "5173:5173"
@@ -180,7 +66,8 @@ services:
       - ./apps/act/src:/var/www/act.test
       - ./apps/fast/src:/var/www/fast.test
       - ./apps/rel/src:/var/www/rel.test
-
+      - ./apps/act-engine/src:/var/www/act-engine.test
+      - ./apps/express-engine/src:/var/www/express-engine.test
     networks:
       ssr-network2:
         aliases:
@@ -205,7 +92,7 @@ services:
     volumes:
       - ./apps/fluent-flask/src/app:/app
     environment:
-      - MYSQL_HOST=db-fluent
+      - MYSQL_HOST=dbs
       - MYSQL_PORT=3306
       - MYSQL_USER=local
       - MYSQL_PASSWORD=secret
@@ -248,20 +135,6 @@ services:
           - fluent.test
           - fluent-widget.test
           - ws.test
-
-  express-engine:
-    build:
-      context: ./apps/express-engine
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: express-engine
-    networks:
-      ssr-network2:
-        aliases:
-          - express.test
-          - express-engine.test
-    volumes:
-      - ./apps/express-engine/src:/var/www/express-engine.test
 
   fluent-widget:
     build:

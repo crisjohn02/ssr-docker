@@ -45,4 +45,10 @@ fi
 # Run npm run dev for fast
 (cd /var/www/fast.test && npm run dev) &
 
+# build act-engine.test
+cd /var/www/act-engine.test && npm run build
+
+# build express-engine.test
+cd /var/www/express-engine.test && npm run build
+
 /usr/sbin/nginx -g "daemon off;"
